@@ -23,6 +23,11 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   String recommendations = "Loading...";
 
+  final Color backgroundColor = const Color(0xFFF2FDF4);
+  final Color appBarColor = Colors.greenAccent;
+  final Color titleColor = Colors.greenAccent;
+  final Color bodyTextColor = Colors.black87;
+
   @override
   void initState() {
     super.initState();
@@ -78,13 +83,14 @@ class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Old theme background
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text("Test Results"),
-        backgroundColor: Color(0xFF00796B), // Old theme green color
+        title: const Text("Test Results"),
+        backgroundColor: appBarColor,
+        foregroundColor: Colors.white,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(24.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,26 +98,32 @@ class _ResultPageState extends State<ResultPage> {
               Text(
                 "Mental Health Scores",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF00796B), // Green title
+                  color: titleColor,
                 ),
               ),
-              SizedBox(height: 10),
-              Text("BAI Score: ${widget.baiScore}"),
-              Text("BDI Score: ${widget.bdiScore}"),
-              Text("Total Score: ${widget.baiScore + widget.bdiScore}"),
-              SizedBox(height: 20),
+              const SizedBox(height: 12),
+              Text("BAI Score: ${widget.baiScore}",
+                  style: TextStyle(color: bodyTextColor, fontSize: 16)),
+              Text("BDI Score: ${widget.bdiScore}",
+                  style: TextStyle(color: bodyTextColor, fontSize: 16)),
+              Text("Total Score: ${widget.baiScore + widget.bdiScore}",
+                  style: TextStyle(color: bodyTextColor, fontSize: 16)),
+              const SizedBox(height: 24),
               Text(
                 "Recommendation",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF00796B), // Green title
+                  color: titleColor,
                 ),
               ),
-              SizedBox(height: 10),
-              Text(recommendations),
+              const SizedBox(height: 12),
+              Text(
+                recommendations,
+                style: TextStyle(color: bodyTextColor, fontSize: 16),
+              ),
             ],
           ),
         ),

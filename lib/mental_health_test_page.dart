@@ -36,7 +36,17 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(question, style: TextStyle(fontWeight: FontWeight.bold)),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Text(
+            question,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Colors.black87,
+            ),
+          ),
+        ),
         Row(
           children: List.generate(4, (i) {
             return Expanded(
@@ -53,6 +63,10 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
                     }
                   });
                 },
+                activeColor: Colors.greenAccent,
+                contentPadding: EdgeInsets.zero,
+                dense: true,
+                visualDensity: VisualDensity.compact,
               ),
             );
           }),
@@ -80,62 +94,73 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
     );
   }
 
+  InputDecoration _inputDecoration(String label, IconData icon) {
+    return InputDecoration(
+      labelText: label,
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      prefixIcon: Icon(icon),
+      filled: true,
+      fillColor: Colors.white,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFF8E1), // Matching theme background
+      backgroundColor: const Color(0xFFF2FDF4), // Same pastel bg as LoginPage
       appBar: AppBar(
-        title: Text("Mental Health Test"),
-        backgroundColor: Colors.teal, // Matching AppBar color
+        title: const Text("Mental Health Test"),
+        backgroundColor: Colors.greenAccent, // Same greenAccent as LoginPage
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Enter your height (cm):"),
             TextField(
               controller: heightController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12),
-              ),
+              decoration: _inputDecoration("Enter your height (cm)", Icons.height),
             ),
-            SizedBox(height: 10),
-            Text("Enter your weight (kg):"),
+            const SizedBox(height: 20),
             TextField(
               controller: weightController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12),
-              ),
+              decoration: _inputDecoration("Enter your weight (kg)", Icons.monitor_weight),
             ),
-            SizedBox(height: 20),
-            Text("BAI Questionnaire",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 30),
+            const Text(
+              "BAI Questionnaire",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
             ...List.generate(baiQuestions.length,
                 (i) => buildQuestion(baiQuestions[i], i, true)),
-            SizedBox(height: 20),
-            Text("BDI Questionnaire",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 30),
+            const Text(
+              "BDI Questionnaire",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
             ...List.generate(bdiQuestions.length,
                 (i) => buildQuestion(bdiQuestions[i], i, false)),
-            SizedBox(height: 20),
+            const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
                 onPressed: calculateAndNavigate,
-                child: Text("Submit", style: TextStyle(fontSize: 16)),
+                child: const Text("Submit", style: TextStyle(fontSize: 18)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  backgroundColor: Colors.greenAccent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
