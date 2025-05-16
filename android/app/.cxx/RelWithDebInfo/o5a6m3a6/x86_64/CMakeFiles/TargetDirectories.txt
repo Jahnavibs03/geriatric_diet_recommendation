@@ -1,0 +1,2 @@
+C:/Users/Jahnavi/geriatric_app/android/app/.cxx/RelWithDebInfo/o5a6m3a6/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/Jahnavi/geriatric_app/android/app/.cxx/RelWithDebInfo/o5a6m3a6/x86_64/CMakeFiles/rebuild_cache.dir
