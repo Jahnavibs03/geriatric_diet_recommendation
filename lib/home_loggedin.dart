@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 class HomeLoggedIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
-      backgroundColor: Color(0xFFFFF8E1),
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text('Welcome Home'),
-        backgroundColor: Colors.teal,
+        backgroundColor: colorScheme.primary,
+        centerTitle: true,
+        elevation: 2,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -19,7 +24,7 @@ class HomeLoggedIn extends StatelessWidget {
               title: 'Profile Page',
               icon: Icons.person,
               route: '/profile',
-              color: Colors.deepOrange,
+              color: colorScheme.primaryContainer,
             ),
             SizedBox(height: 20),
             _buildHomeOption(
@@ -27,7 +32,7 @@ class HomeLoggedIn extends StatelessWidget {
               title: 'Take Mental Health Test',
               icon: Icons.psychology,
               route: '/test',
-              color: Colors.teal,
+              color: colorScheme.secondaryContainer,
             ),
             SizedBox(height: 20),
             _buildHomeOption(
@@ -35,7 +40,7 @@ class HomeLoggedIn extends StatelessWidget {
               title: 'Previous Diet Recommendation',
               icon: Icons.restaurant_menu,
               route: '/diet',
-              color: Colors.purple,
+              color: colorScheme.tertiaryContainer ?? Colors.purple.shade200,
             ),
           ],
         ),
@@ -56,14 +61,14 @@ class HomeLoggedIn extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.9),
+          color: color,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
               color: Colors.black26,
               blurRadius: 6,
               offset: Offset(2, 4),
-            )
+            ),
           ],
         ),
         child: Row(
@@ -72,11 +77,11 @@ class HomeLoggedIn extends StatelessWidget {
             SizedBox(width: 16),
             Text(
               title,
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
             ),
           ],
         ),

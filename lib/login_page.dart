@@ -45,8 +45,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFF8E1),
-      appBar: AppBar(title: Text("Login Page"), backgroundColor: Colors.teal),
+      backgroundColor: const Color(0xFFF2FDF4),
+      appBar: AppBar(
+        title: const Text("Login Page"),
+        backgroundColor: Colors.greenAccent,
+        foregroundColor: Colors.white,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Form(
@@ -58,27 +62,33 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _usernameController,
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12)),
                   prefixIcon: Icon(Icons.person),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
                 validator: (value) => value == null || value.isEmpty
                     ? 'Enter your username'
                     : null,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12)),
                   prefixIcon: Icon(Icons.lock),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
                 obscureText: true,
                 validator: (value) => value == null || value.isEmpty
                     ? 'Enter your password'
                     : null,
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -86,16 +96,21 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  backgroundColor: Colors.greenAccent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
-                child: Text('Login', style: TextStyle(fontSize: 18)),
+                child: const Text('Login', style: TextStyle(fontSize: 18)),
               ),
               TextButton(
                 onPressed: () => Navigator.pushNamed(context, '/signup'),
-                child: Text("Not registered? Sign up here"),
+                child: const Text(
+                  "Not registered? Sign up here",
+                  style: TextStyle(color: Colors.black54),
+                ),
               ),
             ],
           ),

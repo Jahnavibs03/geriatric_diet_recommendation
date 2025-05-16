@@ -13,51 +13,23 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
   TextEditingController weightController = TextEditingController();
 
   final List<String> baiQuestions = [
-    "1. Numbness or tingling",
-    "2. Feeling hot",
-    "3. Wobbliness in legs",
-    "4. Unable to relax",
-    "5. Fear of worst happening",
-    "6. Dizzy or lightheaded",
-    "7. Heart pounding / racing",
-    "8. Unsteady",
-    "9. Terrified or afraid",
-    "10. Nervous",
-    "11. Feeling of choking",
-    "12. Hands trembling",
-    "13. Shaky / unsteady",
-    "14. Fear of losing control",
-    "15. Difficulty in breathing",
-    "16. Fear of dying",
-    "17. Scared",
-    "18. Indigestion",
-    "19. Faint / lightheaded",
-    "20. Face flushed",
-    "21. Hot / cold sweats"
+    "1. Numbness or tingling", "2. Feeling hot", "3. Wobbliness in legs",
+    "4. Unable to relax", "5. Fear of worst happening", "6. Dizzy or lightheaded",
+    "7. Heart pounding / racing", "8. Unsteady", "9. Terrified or afraid",
+    "10. Nervous", "11. Feeling of choking", "12. Hands trembling",
+    "13. Shaky / unsteady", "14. Fear of losing control", "15. Difficulty in breathing",
+    "16. Fear of dying", "17. Scared", "18. Indigestion", "19. Faint / lightheaded",
+    "20. Face flushed", "21. Hot / cold sweats"
   ];
 
   final List<String> bdiQuestions = [
-    "1. Sadness",
-    "2. Pessimism",
-    "3. Past failure",
-    "4. Loss of pleasure",
-    "5. Guilty feelings",
-    "6. Punishment feelings",
-    "7. Self-dislike",
-    "8. Self-criticalness",
-    "9. Suicidal thoughts",
-    "10. Crying",
-    "11. Agitation",
-    "12. Loss of interest",
-    "13. Indecisiveness",
-    "14. Worthlessness",
-    "15. Loss of energy",
-    "16. Changes in sleeping pattern",
-    "17. Irritability",
-    "18. Changes in appetite",
-    "19. Difficulty concentrating",
-    "20. Tiredness or fatigue",
-    "21. Loss of interest in sex"
+    "1. Sadness", "2. Pessimism", "3. Past failure", "4. Loss of pleasure",
+    "5. Guilty feelings", "6. Punishment feelings", "7. Self-dislike",
+    "8. Self-criticalness", "9. Suicidal thoughts", "10. Crying", "11. Agitation",
+    "12. Loss of interest", "13. Indecisiveness", "14. Worthlessness",
+    "15. Loss of energy", "16. Changes in sleeping pattern", "17. Irritability",
+    "18. Changes in appetite", "19. Difficulty concentrating",
+    "20. Tiredness or fatigue", "21. Loss of interest in sex"
   ];
 
   Widget buildQuestion(String question, int index, bool isBai) {
@@ -111,21 +83,35 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[50],
-      appBar: AppBar(title: Text("Mental Health Test")),
+      backgroundColor: Color(0xFFFFF8E1), // Matching theme background
+      appBar: AppBar(
+        title: Text("Mental Health Test"),
+        backgroundColor: Colors.teal, // Matching AppBar color
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Enter your height (cm):"),
             TextField(
-                controller: heightController,
-                keyboardType: TextInputType.number),
+              controller: heightController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(horizontal: 12),
+              ),
+            ),
             SizedBox(height: 10),
             Text("Enter your weight (kg):"),
             TextField(
-                controller: weightController,
-                keyboardType: TextInputType.number),
+              controller: weightController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(horizontal: 12),
+              ),
+            ),
             SizedBox(height: 20),
             Text("BAI Questionnaire",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -137,11 +123,18 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
             ...List.generate(bdiQuestions.length,
                 (i) => buildQuestion(bdiQuestions[i], i, false)),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: calculateAndNavigate,
-              child: Text("Submit"),
-              style:
-                  ElevatedButton.styleFrom(backgroundColor: Colors.pinkAccent),
+            Center(
+              child: ElevatedButton(
+                onPressed: calculateAndNavigate,
+                child: Text("Submit", style: TextStyle(fontSize: 16)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
             )
           ],
         ),

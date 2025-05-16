@@ -28,18 +28,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
-      backgroundColor: Color(0xFFFFF8E1),
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text("Profile"),
-        backgroundColor: Colors.teal,
+        backgroundColor: colorScheme.primary,
         centerTitle: true,
+        elevation: 2,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            _buildProfileCard(Icons.email, 'Email', email),
+            _buildProfileCard(Icons.email, 'Email', email, theme),
             SizedBox(height: 20),
             _buildActionButton(
               icon: Icons.lock_reset,
@@ -51,11 +55,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   showChangePassword = !showChangePassword;
                 });
               },
-              color: Colors.deepOrange,
+              color: colorScheme.secondary,
             ),
-            if (showChangePassword) _buildPasswordForm(),
+            if (showChangePassword) _buildPasswordForm(theme, colorScheme),
             SizedBox(height: 20),
-            _buildScoreSection(scores),
+            _buildScoreSection(scores, theme, colorScheme),
             Spacer(),
             _buildActionButton(
               icon: Icons.logout,
@@ -72,11 +76,12 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildProfileCard(IconData icon, String label, String value) {
+  Widget _buildProfileCard(
+      IconData icon, String label, String value, ThemeData theme) {
     return Container(
       padding: EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.teal[100],
+        color: theme.colorScheme.primaryContainer.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(color: Colors.black12, blurRadius: 5, offset: Offset(2, 3))
@@ -84,15 +89,17 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       child: Row(
         children: [
-          Icon(icon, size: 28, color: Colors.teal[800]),
+          Icon(icon, size: 28, color: theme.colorScheme.primary),
           SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(label,
-                  style: TextStyle(fontSize: 14, color: Colors.grey[800])),
+                  style: theme.textTheme.bodyMedium!
+                      .copyWith(color: Colors.grey[800], fontSize: 14)),
               Text(value,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  style: theme.textTheme.headlineMedium!
+                      .copyWith(fontWeight: FontWeight.bold, fontSize: 18)),
             ],
           )
         ],
@@ -114,8 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
           color: color,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
-            BoxShadow(
-                color: Colors.black26, blurRadius: 5, offset: Offset(2, 3))
+            BoxShadow(color: Colors.black26, blurRadius: 5, offset: Offset(2, 3))
           ],
         ),
         child: Row(
@@ -133,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildPasswordForm() {
+  Widget _buildPasswordForm(ThemeData theme, ColorScheme colorScheme) {
     return Form(
       key: _formKey,
       child: Column(
@@ -179,7 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(height: 10),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
+              backgroundColor: colorScheme.primary,
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             ),
             onPressed: () {
@@ -225,33 +231,37 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildScoreSection(List<dynamic> scores) {
+  Widget _buildScoreSection(
+      List<dynamic> scores, ThemeData theme, ColorScheme colorScheme) {
     return Expanded(
       child: Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.purple[100],
+          color: colorScheme.secondaryContainer.withOpacity(0.7),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Previous Mental Health Scores",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.purple[900])),
+                style: theme.textTheme.headlineMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.secondaryContainer ?? Colors.purple[900],
+                  fontSize: 18,
+                )),
             SizedBox(height: 12),
             Expanded(
               child: scores.isEmpty
                   ? Text("No scores available",
-                      style: TextStyle(color: Colors.black54))
+                      style: theme.textTheme.bodyMedium!
+                          .copyWith(color: Colors.black54))
                   : ListView.builder(
                       itemCount: scores.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          leading: Icon(Icons.bar_chart, color: Colors.purple),
-                          title: Text("Score ${index + 1}: ${scores[index]}"),
+                          leading: Icon(Icons.bar_chart, color: colorScheme.secondary),
+                          title: Text("Score ${index + 1}: ${scores[index]}",
+                              style: theme.textTheme.bodyMedium),
                         );
                       },
                     ),

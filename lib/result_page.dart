@@ -30,9 +30,8 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Future<void> fetchRecommendation() async {
-    final url = Uri.parse("http://192.168.0.8:8001/recommend_diet");
+    final url = Uri.parse("https://geriatric-diet-recommendation-2.onrender.com/recommend_diet");
 
-    // TODO: Replace with actual user input or state management for these
     final int gender = 0; // 0 = Male, 1 = Female
     final int age = 65;
 
@@ -79,17 +78,24 @@ class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[50],
-      appBar: AppBar(title: Text("Test Results")),
+      backgroundColor: Colors.white, // Old theme background
+      appBar: AppBar(
+        title: Text("Test Results"),
+        backgroundColor: Color(0xFF00796B), // Old theme green color
+      ),
       body: Padding(
         padding: EdgeInsets.all(16),
-        child: SingleChildScrollView(  // Added scroll in case recommendation is long
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 "Mental Health Scores",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF00796B), // Green title
+                ),
               ),
               SizedBox(height: 10),
               Text("BAI Score: ${widget.baiScore}"),
@@ -98,7 +104,11 @@ class _ResultPageState extends State<ResultPage> {
               SizedBox(height: 20),
               Text(
                 "Recommendation",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF00796B), // Green title
+                ),
               ),
               SizedBox(height: 10),
               Text(recommendations),

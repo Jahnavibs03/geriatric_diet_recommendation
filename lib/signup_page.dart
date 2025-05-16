@@ -36,7 +36,7 @@ class _SignupPageState extends State<SignupPage> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('Signup'),
+        title: const Text('Signup'),
         content: Text(message),
         actions: [
           TextButton(
@@ -45,7 +45,7 @@ class _SignupPageState extends State<SignupPage> {
               if (message.contains('successfully'))
                 Navigator.pop(context); // go back to login
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           )
         ],
       ),
@@ -55,9 +55,12 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFF8E1),
+      backgroundColor: const Color(0xFFF2FDF4),
       appBar: AppBar(
-          title: Text("Signup Page"), backgroundColor: Colors.deepOrange),
+        title: const Text("Signup Page"),
+        backgroundColor: Colors.greenAccent,
+        foregroundColor: Colors.white,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Form(
@@ -69,42 +72,55 @@ class _SignupPageState extends State<SignupPage> {
                 controller: _usernameController,
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person_add),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  prefixIcon: const Icon(Icons.person_add),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
                 validator: (value) =>
                     value == null || value.isEmpty ? 'Enter a username' : null,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock_outline),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  prefixIcon: const Icon(Icons.lock_outline),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Enter a password';
-                  if (!isStrongPassword(value))
+                  if (!isStrongPassword(value)) {
                     return 'Weak password. Use upper, lower, digit & special char.';
+                  }
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _confirmPasswordController,
                 decoration: InputDecoration(
                   labelText: 'Confirm Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  prefixIcon: const Icon(Icons.lock),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
                 obscureText: true,
                 validator: (value) => value != _passwordController.text
                     ? 'Passwords do not match'
                     : null,
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -112,12 +128,14 @@ class _SignupPageState extends State<SignupPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  backgroundColor: Colors.greenAccent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
-                child: Text('Register', style: TextStyle(fontSize: 18)),
+                child: const Text('Register', style: TextStyle(fontSize: 18)),
               ),
             ],
           ),
