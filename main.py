@@ -111,17 +111,14 @@ async def recommend_diet(data: ScoreInput):
         raise HTTPException(status_code=500, detail=f"Gemini API call failed: {e}")
     import re
 
-    # Convert *...* to **...** for bold text
-    recommendation = re.sub(r"\*(.*?)\*", r"**\1**", recommendation)
+        # Remove all * and # characters
+    recommendation = re.sub(r"[*#]", "", recommendation)
 
-    # Convert any markdown heading (# to ######) to level 2 heading (##)
-    recommendation = re.sub(r"^#{1,6}\s*(.*)", r"## \1", recommendation, flags=re.MULTILINE)
-
-    # Optional: clean up excessive newlines
-    recommendation = re.sub(r'\n{3,}', '\n\n', recommendation)
-
-    # Strip leading/trailing whitespace
+    # Optional: strip leading/trailing whitespace
     recommendation = recommendation.strip()
+
+        # Optional: clean up excessive newlines
+    recommendation = re.sub(r'\n{3,}', '\n\n', recommendation)
 
 
     return {"recommendation": recommendation}
