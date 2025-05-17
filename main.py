@@ -81,7 +81,7 @@ async def recommend_diet(data: ScoreInput):
 
     # Gemini prompt with capitalized names and computed BMI
     prompt = (
-        f"Provide a personalized Indian diet recommendation for a {nutrient_full} deficiency in an elderly patient in table"
+        f"Provide a personalized Indian diet recommendation for a {nutrient_full} deficiency in an elderly patient "
         f"with the following details: Age {data.age}, BMI {bmi:.2f}, BDI score {data.bdi_score}, and BAI score {data.bai_score}. "
         f"Focus on improving geriatric mental health and addressing the deficiency of {nutrient_full}."
     )
