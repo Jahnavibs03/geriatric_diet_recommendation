@@ -10,7 +10,7 @@ class HomeLoggedIn extends StatelessWidget {
           'Welcome Home',
           style: TextStyle(color: Color(0xFF225522)), // dark green
         ),
-        backgroundColor:  Colors.greenAccent,
+        backgroundColor:  const Color.fromARGB(255, 37, 151, 222),
         elevation: 0,
         iconTheme: const IconThemeData(color: Color(0xFF225522)), // dark green for back button
       ),
@@ -25,7 +25,7 @@ class HomeLoggedIn extends StatelessWidget {
                 title: 'Profile Page',
                 icon: Icons.person,
                 route: '/profile',
-                color:  Colors.greenAccent,
+                color:  const Color.fromARGB(255, 37, 151, 222),
               ),
               const SizedBox(height: 24),
               _buildHomeOption(
@@ -33,7 +33,7 @@ class HomeLoggedIn extends StatelessWidget {
                 title: 'Take Mental Health Test',
                 icon: Icons.psychology,
                 route: '/test',
-                color:  Colors.greenAccent,
+                color:  const Color.fromARGB(255, 37, 151, 222),
               ),
               const SizedBox(height: 24),
               _buildHomeOption(
@@ -41,7 +41,7 @@ class HomeLoggedIn extends StatelessWidget {
                 title: 'Previous Diet Recommendation',
                 icon: Icons.restaurant_menu,
                 route: '/diet',
-                color:  const Color.fromARGB(255, 41, 104, 117),
+                color:  const Color.fromARGB(255, 37, 151, 222),
               ),
             ],
           ),

@@ -58,7 +58,7 @@ class _SignupPageState extends State<SignupPage> {
       backgroundColor: const Color(0xFFF2FDF4),
       appBar: AppBar(
         title: const Text("Signup Page"),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: const Color.fromARGB(255, 37, 151, 222),
         foregroundColor: Colors.white,
       ),
       body: Padding(
@@ -128,7 +128,7 @@ class _SignupPageState extends State<SignupPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.greenAccent,
+                  backgroundColor: const Color.fromARGB(255, 37, 151, 222),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(

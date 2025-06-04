@@ -63,7 +63,7 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
                     }
                   });
                 },
-                activeColor: Colors.greenAccent,
+                activeColor: const Color.fromARGB(255, 37, 151, 222),
                 contentPadding: EdgeInsets.zero,
                 dense: true,
                 visualDensity: VisualDensity.compact,
@@ -111,7 +111,7 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
       backgroundColor: const Color(0xFFF2FDF4), // Same pastel bg as LoginPage
       appBar: AppBar(
         title: const Text("Mental Health Test"),
-        backgroundColor: Colors.greenAccent, // Same greenAccent as LoginPage
+        backgroundColor: const Color.fromARGB(255, 37, 151, 222), // Same greenAccent as LoginPage
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -152,7 +152,7 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
                 onPressed: calculateAndNavigate,
                 child: const Text("Submit", style: TextStyle(fontSize: 18)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.greenAccent,
+                  backgroundColor: const Color.fromARGB(255, 37, 151, 222),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(

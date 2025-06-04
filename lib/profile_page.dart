@@ -20,8 +20,8 @@ class _ProfilePageState extends State<ProfilePage> {
   List<dynamic> scores = [];
 
   final Color backgroundColor = const Color(0xFFF2FDF4);
-  final Color appBarColor = Colors.greenAccent;
-  final Color buttonColor = Colors.greenAccent;
+  final Color appBarColor = const Color.fromARGB(255, 37, 151, 222);
+  final Color buttonColor = const Color.fromARGB(255, 37, 151, 222);
   final Color buttonTextColor = Colors.white;
   final Color textFieldFillColor = Colors.white;
 
