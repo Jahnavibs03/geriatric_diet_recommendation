@@ -1,5 +1,5 @@
 @echo off
-"C:\\Users\\Jahnavi\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\cmake.exe" ^
+"C:\\Users\\Jahnavi\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\cmake.exe" ^
   "-HC:\\flutter_windows_3.24.5-stable\\flutter\\packages\\flutter_tools\\gradle\\src\\main\\groovy" ^
   "-DCMAKE_SYSTEM_NAME=Android" ^
   "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" ^
@@ -10,7 +10,7 @@
   "-DANDROID_NDK=C:\\Users\\Jahnavi\\AppData\\Local\\Android\\sdk\\ndk\\29.0.13113456" ^
   "-DCMAKE_ANDROID_NDK=C:\\Users\\Jahnavi\\AppData\\Local\\Android\\sdk\\ndk\\29.0.13113456" ^
   "-DCMAKE_TOOLCHAIN_FILE=C:\\Users\\Jahnavi\\AppData\\Local\\Android\\sdk\\ndk\\29.0.13113456\\build\\cmake\\android.toolchain.cmake" ^
-  "-DCMAKE_MAKE_PROGRAM=C:\\Users\\Jahnavi\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\ninja.exe" ^
+  "-DCMAKE_MAKE_PROGRAM=C:\\Users\\Jahnavi\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe" ^
   "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\\Users\\Jahnavi\\geriatric_app\\build\\app\\intermediates\\cxx\\Debug\\506f2i3i\\obj\\x86" ^
   "-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\\Users\\Jahnavi\\geriatric_app\\build\\app\\intermediates\\cxx\\Debug\\506f2i3i\\obj\\x86" ^
   "-DCMAKE_BUILD_TYPE=Debug" ^
