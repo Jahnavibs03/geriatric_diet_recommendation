@@ -6,6 +6,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from sklearn.linear_model import Ridge
+import re
 
 load_dotenv()
 
@@ -15,7 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace "*" with your frontend URL
+    allow_origins=["*"],  # Replace "*" with frontend URL in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -65,16 +66,36 @@ async def recommend_diet(data: ScoreInput):
 
     try:
         pred_values = pred[0]
-        top_idx = int(np.argmax(pred_values))
-        nutrient_short = target_cols[top_idx]
+
+        # Select top 5 nutrients by predicted score
+        top_n = 5
+        top_indices = np.argsort(pred_values)[-top_n:][::-1]  # descending order
+
+        # Get nutrient names and their predicted scores
+        top_nutrients = [(target_cols[i], pred_values[i]) for i in top_indices]
+
+        # Prepare weights for weighted random sampling
+        scores = np.array([score for _, score in top_nutrients])
+
+        # Shift scores to positive to avoid issues with negative values and normalize
+        min_score = scores.min()
+        if min_score < 0:
+            scores = scores - min_score + 1e-3
+        else:
+            scores = scores + 1e-3
+
+        weights = scores / scores.sum()
+
+        # Randomly choose one nutrient weighted by predicted scores
+        chosen_nutrient = np.random.choice([nutr for nutr, _ in top_nutrients], p=weights)
 
         # Map short nutrient name to full name (e.g., vitA -> Vitamin_A)
-        nutrient_short_lower = nutrient_short.lower()
+        nutrient_short_lower = chosen_nutrient.lower()
         if nutrient_short_lower.startswith("vit") and len(nutrient_short_lower) > 3:
             letter = nutrient_short_lower[3].upper()
             nutrient_full = f"Vitamin_{letter}"
         else:
-            nutrient_full = nutrient_short
+            nutrient_full = chosen_nutrient
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Identifying nutrient deficiency failed: {e}")
@@ -87,8 +108,9 @@ async def recommend_diet(data: ScoreInput):
     )
 
     api_key = os.getenv("GEMINI_API_KEY")
-    #if not api_key:
-        #raise HTTPException(status_code=500, detail="Gemini API key not configured")
+    # if not api_key:
+    #     raise HTTPException(status_code=500, detail="Gemini API key not configured")
+
     try:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
         headers = {"Content-Type": "application/json"}
@@ -98,7 +120,7 @@ async def recommend_diet(data: ScoreInput):
         response.raise_for_status()
         result = response.json()
 
-        recommendation = "IMPACTED/ DEFICIENT NUTRIENT:" + nutrient_full + "\n"
+        recommendation = "IMPACTED/ DEFICIENT NUTRIENT: " + nutrient_full + "\n"
         candidates = result.get("candidates", [])
         if candidates:
             parts = candidates[0].get("content", {}).get("parts", [])
@@ -109,16 +131,10 @@ async def recommend_diet(data: ScoreInput):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Gemini API call failed: {e}")
-    import re
 
-        # Remove all * and # characters
+    # Clean recommendation text
     recommendation = re.sub(r"[*#]", "", recommendation)
-
-    # Optional: strip leading/trailing whitespace
     recommendation = recommendation.strip()
-
-        # Optional: clean up excessive newlines
     recommendation = re.sub(r'\n{3,}', '\n\n', recommendation)
-
 
     return {"recommendation": recommendation}
