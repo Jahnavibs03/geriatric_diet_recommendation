@@ -9,6 +9,7 @@ class MentalHealthTestPage extends StatefulWidget {
 class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
   List<int> baiResponses = List.filled(21, 0);
   List<int> bdiResponses = List.filled(21, 0);
+  TextEditingController ageController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
@@ -80,6 +81,7 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
     int bdiScore = bdiResponses.reduce((a, b) => a + b);
     double height = double.tryParse(heightController.text) ?? 0.0;
     double weight = double.tryParse(weightController.text) ?? 0.0;
+    int age = int.tryParse(ageController.text) ?? 65;  // Default age if empty or invalid
 
     Navigator.push(
       context,
@@ -89,6 +91,7 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
           bdiScore: bdiScore,
           height: height,
           weight: weight,
+          age: age,  // Pass age
         ),
       ),
     );
@@ -119,6 +122,14 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Age input field added here
+            TextField(
+              controller: ageController,
+              keyboardType: TextInputType.number,
+              decoration: _inputDecoration("Enter your age", Icons.calendar_today),
+            ),
+            const SizedBox(height: 20),
+
             TextField(
               controller: heightController,
               keyboardType: TextInputType.number,

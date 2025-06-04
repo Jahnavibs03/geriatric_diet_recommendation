@@ -98,7 +98,7 @@ async def recommend_diet(data: ScoreInput):
         response.raise_for_status()
         result = response.json()
 
-        recommendation = "IMPACTED/ DEFICIENT NUTRIENT:" + nutrient_full
+        recommendation = "IMPACTED/ DEFICIENT NUTRIENT:" + nutrient_full + "\n"
         candidates = result.get("candidates", [])
         if candidates:
             parts = candidates[0].get("content", {}).get("parts", [])

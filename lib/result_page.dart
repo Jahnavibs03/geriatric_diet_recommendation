@@ -8,12 +8,14 @@ class ResultPage extends StatefulWidget {
   final int bdiScore;
   final double height;
   final double weight;
+  final int age;  // added
 
   ResultPage({
     required this.baiScore,
     required this.bdiScore,
     required this.height,
     required this.weight,
+    required this.age,  // added
   });
 
   @override
@@ -38,7 +40,7 @@ class _ResultPageState extends State<ResultPage> {
     final url = Uri.parse("https://geriatric-diet-recommendation-2.onrender.com/recommend_diet");
 
     final int gender = 0; // 0 = Male, 1 = Female
-    final int age = 65;
+    final int age = widget.age; // Now coming from user input
 
     try {
       final response = await http.post(
@@ -50,7 +52,7 @@ class _ResultPageState extends State<ResultPage> {
           "height": widget.height,
           "weight": widget.weight,
           "gender": gender,
-          "age": age,
+          "age": age,  // pass age here
         }),
       );
 
