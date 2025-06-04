@@ -41,7 +41,7 @@ class HomeLoggedIn extends StatelessWidget {
                 title: 'Previous Diet Recommendation',
                 icon: Icons.restaurant_menu,
                 route: '/diet',
-                color:  Colors.greenAccent,
+                color:  const Color.fromARGB(255, 41, 104, 117),
               ),
             ],
           ),
