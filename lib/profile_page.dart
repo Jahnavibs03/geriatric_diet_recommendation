@@ -45,39 +45,35 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: true,
         elevation: 2,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildProfileCard(Icons.email, 'Email', email),
-              const SizedBox(height: 20),
-              _buildActionButton(
-                icon: Icons.lock_reset,
-                label: showChangePassword ? 'Cancel Password Change' : 'Change Password',
-                onTap: () {
-                  setState(() {
-                    showChangePassword = !showChangePassword;
-                  });
-                },
-              ),
-              if (showChangePassword) _buildPasswordForm(),
-              const SizedBox(height: 20),
-              _buildScoreSection(scores),
-              const SizedBox(height: 20),
-              _buildActionButton(
-                icon: Icons.logout,
-                label: 'Logout',
-                onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-                },
-              ),
-            ],
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            _buildProfileCard(Icons.email, 'Email', email),
+            const SizedBox(height: 20),
+            _buildActionButton(
+              icon: Icons.lock_reset,
+              label: showChangePassword ? 'Cancel Password Change' : 'Change Password',
+              onTap: () {
+                setState(() {
+                  showChangePassword = !showChangePassword;
+                });
+              },
+            ),
+            if (showChangePassword) _buildPasswordForm(),
+            const SizedBox(height: 20),
+            _buildScoreSection(scores),
+            const Spacer(),
+            _buildActionButton(
+              icon: Icons.logout,
+              label: 'Logout',
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+              },
+            ),
+          ],
         ),
       ),
-
     );
   }
 
@@ -236,40 +232,42 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildScoreSection(List<dynamic> scores) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: textFieldFillColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Previous Mental Health Scores",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                  fontSize: 18,
-                )),
-            const SizedBox(height: 12),
-            Expanded(
-              child: scores.isEmpty
-                  ? Text("No scores available",
-                      style: TextStyle(color: Colors.black54))
-                  : ListView.builder(
-                      itemCount: scores.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: Icon(Icons.bar_chart, color: appBarColor),
-                          title: Text("Score ${index + 1}: ${scores[index]}",
-                              style: const TextStyle(color: Colors.black87)),
-                        );
-                      },
-                    ),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: textFieldFillColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Previous Mental Health Scores",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+              fontSize: 18,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            height: 200, // 👈 give a fixed height
+            child: scores.isEmpty
+                ? Text("No scores available", style: TextStyle(color: Colors.black54))
+                : ListView.builder(
+                    itemCount: scores.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Icon(Icons.bar_chart, color: appBarColor),
+                        title: Text(
+                          "Score ${index + 1}: ${scores[index]}",
+                          style: const TextStyle(color: Colors.black87),
+                        ),
+                      );
+                    },
+                  ),
+          ),
+        ],
       ),
     );
   }
