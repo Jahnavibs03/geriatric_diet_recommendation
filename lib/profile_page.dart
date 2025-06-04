@@ -28,14 +28,34 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    email = userBox.get('currentUser', defaultValue: 'N/A');
-    scores = scoresBox.get(email, defaultValue: []);
+    _loadUserData();
+  }
+
+  void _loadUserData() {
+    final currentUserEmail = userBox.get('currentUser', defaultValue: '');
+
+    if (currentUserEmail == null || currentUserEmail.isEmpty) {
+      // No logged in user found - handle this case if needed
+      email = '';
+      scores = [];
+    } else {
+      email = currentUserEmail;
+      scores = scoresBox.get(email, defaultValue: []);
+    }
+    setState(() {}); // Refresh UI after loading data
+  }
+
+  @override
+  void dispose() {
+    // Dispose controllers to avoid memory leaks
+    _currentPassController.dispose();
+    _newPassController.dispose();
+    _confirmPassController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -45,33 +65,44 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: true,
         elevation: 2,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            _buildProfileCard(Icons.email, 'Email', email),
-            const SizedBox(height: 20),
-            _buildActionButton(
-              icon: Icons.lock_reset,
-              label: showChangePassword ? 'Cancel Password Change' : 'Change Password',
-              onTap: () {
-                setState(() {
-                  showChangePassword = !showChangePassword;
-                });
-              },
-            ),
-            if (showChangePassword) _buildPasswordForm(),
-            const SizedBox(height: 20),
-            _buildScoreSection(scores),
-            const Spacer(),
-            _buildActionButton(
-              icon: Icons.logout,
-              label: 'Logout',
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-              },
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildProfileCard(Icons.email, 'Email', email.isEmpty ? 'No user logged in' : email),
+              const SizedBox(height: 20),
+              _buildActionButton(
+                icon: Icons.lock_reset,
+                label: showChangePassword ? 'Cancel Password Change' : 'Change Password',
+                onTap: () {
+                  setState(() {
+                    showChangePassword = !showChangePassword;
+                    if (!showChangePassword) {
+                      // Clear password fields when cancelling
+                      _currentPassController.clear();
+                      _newPassController.clear();
+                      _confirmPassController.clear();
+                    }
+                  });
+                },
+              ),
+              if (showChangePassword) _buildPasswordForm(),
+              const SizedBox(height: 20),
+              _buildScoreSection(scores),
+              const SizedBox(height: 20),
+              _buildActionButton(
+                icon: Icons.logout,
+                label: 'Logout',
+                onTap: () {
+                  // Clear current user and navigate back to login/root
+                  userBox.delete('currentUser');
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -88,20 +119,22 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Icon(icon, size: 28, color: appBarColor),
           const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(label,
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 14,
-                  )),
-              Text(value,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.black87)),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(label,
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 14,
+                    )),
+                Text(value,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black87)),
+              ],
+            ),
           ),
         ],
       ),
@@ -126,9 +159,11 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Icon(icon, color: buttonTextColor, size: 24),
             const SizedBox(width: 14),
-            Text(label,
-                style: TextStyle(
-                    fontSize: 18, color: buttonTextColor, fontWeight: FontWeight.w600)),
+            Expanded(
+              child: Text(label,
+                  style: TextStyle(
+                      fontSize: 18, color: buttonTextColor, fontWeight: FontWeight.w600)),
+            ),
           ],
         ),
       ),
@@ -145,10 +180,12 @@ class _ProfilePageState extends State<ProfilePage> {
             label: "Current Password",
             obscure: true,
             validator: (value) {
-              final correct = userBox.get(email);
+              final storedPassword = userBox.get(email);
               if (value == null || value.isEmpty) {
                 return "Enter current password";
-              } else if (value != correct) {
+              } else if (storedPassword == null) {
+                return "User data not found";
+              } else if (value != storedPassword) {
                 return "Incorrect current password";
               }
               return null;
@@ -159,9 +196,10 @@ class _ProfilePageState extends State<ProfilePage> {
             label: "New Password",
             obscure: true,
             validator: (value) {
-              if (value == null ||
-                  value.length < 6 ||
-                  !RegExp(r'^(?=.*[A-Za-z])(?=.*\d)').hasMatch(value)) {
+              if (value == null || value.isEmpty) {
+                return "Enter new password";
+              }
+              if (value.length < 6 || !RegExp(r'^(?=.*[A-Za-z])(?=.*\d)').hasMatch(value)) {
                 return "Password must be at least 6 characters & include letters and numbers";
               }
               return null;
@@ -251,7 +289,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           const SizedBox(height: 12),
           Container(
-            height: 200, // 👈 give a fixed height
+            height: 200,
             child: scores.isEmpty
                 ? Text("No scores available", style: TextStyle(color: Colors.black54))
                 : ListView.builder(

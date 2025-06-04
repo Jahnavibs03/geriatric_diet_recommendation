@@ -19,12 +19,16 @@ class _LoginPageState extends State<LoginPage> {
     final storedPassword = userBox.get(username);
 
     if (storedPassword != null && storedPassword == password) {
+      // Set current user email for ProfilePage
+      userBox.put('currentUser', username);
+
       _showDialog("Login successful!");
       Navigator.pushReplacementNamed(context, '/home');
     } else {
       _showDialog("Invalid username or password");
     }
   }
+
 
   void _showDialog(String message) {
     showDialog(

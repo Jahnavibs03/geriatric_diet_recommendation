@@ -4,11 +4,11 @@ class HomeLoggedIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2FDF4),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           'Welcome Home',
-          style: TextStyle(color: Color(0xFF225522)), // dark green
+          style: TextStyle(color: Colors.white), // dark green
         ),
         backgroundColor:  const Color.fromARGB(255, 37, 151, 222),
         elevation: 0,
