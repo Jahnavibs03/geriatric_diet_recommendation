@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: 'Roboto',
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
-        scaffoldBackgroundColor: const Color(0xFFF2FDF4),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 37, 151, 222)),
+        scaffoldBackgroundColor: Colors.white,
         textTheme: TextTheme(
           headlineMedium: TextStyle(
               fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black87),
