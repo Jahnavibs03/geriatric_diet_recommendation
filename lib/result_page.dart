@@ -23,7 +23,7 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   String recommendations = "Loading...";
 
-  final Color backgroundColor = const Color(0xFFF2FDF4);
+  final Color backgroundColor = Colors.white;
   final Color appBarColor = const Color.fromARGB(255, 37, 151, 222);
   final Color titleColor = const Color.fromARGB(255, 37, 151, 222);
   final Color bodyTextColor = Colors.black87;

@@ -55,7 +55,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2FDF4),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Signup Page"),
         backgroundColor: const Color.fromARGB(255, 37, 151, 222),

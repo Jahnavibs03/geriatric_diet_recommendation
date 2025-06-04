@@ -108,7 +108,7 @@ class _MentalHealthTestPageState extends State<MentalHealthTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2FDF4), // Same pastel bg as LoginPage
+      backgroundColor: Colors.white, // Same pastel bg as LoginPage
       appBar: AppBar(
         title: const Text("Mental Health Test"),
         backgroundColor: const Color.fromARGB(255, 37, 151, 222), // Same greenAccent as LoginPage

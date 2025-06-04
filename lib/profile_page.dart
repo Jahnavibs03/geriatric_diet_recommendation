@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String email = '';
   List<dynamic> scores = [];
 
-  final Color backgroundColor = const Color(0xFFF2FDF4);
+  final Color backgroundColor = Colors.white;
   final Color appBarColor = const Color.fromARGB(255, 37, 151, 222);
   final Color buttonColor = const Color.fromARGB(255, 37, 151, 222);
   final Color buttonTextColor = Colors.white;
