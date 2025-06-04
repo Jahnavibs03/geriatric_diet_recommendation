@@ -76,14 +76,20 @@ class HomeLoggedIn extends StatelessWidget {
           children: [
             Icon(icon, size: 28, color: Colors.white),
             const SizedBox(width: 20),
-            Text(
-              title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow.ellipsis, // optional for safety
+                maxLines: 1,
+                softWrap: false,
               ),
             ),
+
           ],
         ),
       ),
