@@ -45,35 +45,39 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: true,
         elevation: 2,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            _buildProfileCard(Icons.email, 'Email', email),
-            const SizedBox(height: 20),
-            _buildActionButton(
-              icon: Icons.lock_reset,
-              label: showChangePassword ? 'Cancel Password Change' : 'Change Password',
-              onTap: () {
-                setState(() {
-                  showChangePassword = !showChangePassword;
-                });
-              },
-            ),
-            if (showChangePassword) _buildPasswordForm(),
-            const SizedBox(height: 20),
-            _buildScoreSection(scores),
-            const Spacer(),
-            _buildActionButton(
-              icon: Icons.logout,
-              label: 'Logout',
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-              },
-            ),
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildProfileCard(Icons.email, 'Email', email),
+              const SizedBox(height: 20),
+              _buildActionButton(
+                icon: Icons.lock_reset,
+                label: showChangePassword ? 'Cancel Password Change' : 'Change Password',
+                onTap: () {
+                  setState(() {
+                    showChangePassword = !showChangePassword;
+                  });
+                },
+              ),
+              if (showChangePassword) _buildPasswordForm(),
+              const SizedBox(height: 20),
+              _buildScoreSection(scores),
+              const SizedBox(height: 20),
+              _buildActionButton(
+                icon: Icons.logout,
+                label: 'Logout',
+                onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                },
+              ),
+            ],
+          ),
         ),
       ),
+
     );
   }
 
